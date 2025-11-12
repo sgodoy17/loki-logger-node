@@ -1,0 +1,74 @@
+{
+  "name": "loki-logger",
+  "version": "0.0.1",
+  "description": "Lightweight Node.js logger for Grafana Loki — simple, fast, and easy to integrate.",
+  "keywords": [
+    "loki",
+    "logging"
+  ],
+  "homepage": "https://github.com/sgodoy17/loki-logger#readme",
+  "bugs": {
+    "url": "https://github.com/sgodoy17/loki-logger/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sgodoy17/loki-logger.git"
+  },
+  "license": "MIT",
+  "author": "Simon Godoy",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "build:watch": "tsc -p tsconfig.json --watch",
+    "clean": "rm -rf dist",
+    "patch": "npm version patch",
+    "test": "jest  --config ./jest.config.js",
+    "test:coverage": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:watch": "jest --watch",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "**/*.ts": [
+      "prettier --ignore-path ./.prettierignore --write"
+    ],
+    "packages/**/*.json": [
+      "prettier --ignore-path ./.prettierignore --write"
+    ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.39.1",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.10.1",
+    "@types/xml2js": "^0.4.14",
+    "@typescript-eslint/parser": "^8.46.4",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "5.5.4",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "globals": "^16.5.0",
+    "husky": "^9.1.7",
+    "jest": "^30.2.0",
+    "lint-staged": "^16.2.6",
+    "prettier": "^3.6.2",
+    "ts-jest": "^29.4.5",
+    "ts-loader": "^9.5.4",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.4"
+  },
+  "engines": {
+    "node": ">= 20"
+  }
+}

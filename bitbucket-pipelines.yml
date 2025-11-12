@@ -1,0 +1,23 @@
+image: public.ecr.aws/sam/build-nodejs20.x:1.123
+
+definitions:
+  steps:
+    - step: &build
+        name: Build & Test
+        caches:
+          - node
+        script:
+          - npm ci
+          - npm run test
+          - npm run build
+          - git tag "v$(node -p "require('./package.json').version")"
+          - git push origin --tags
+
+pipelines:
+  branches:
+    develop:
+      - step: *build
+    uat:
+      - step: *build
+    master:
+      - step: *build
