@@ -6,13 +6,13 @@
     "loki",
     "logging"
   ],
-  "homepage": "https://github.com/sgodoy17/loki-logger#readme",
+  "homepage": "https://github.com/sgodoy17/loki-logger-node#readme",
   "bugs": {
-    "url": "https://github.com/sgodoy17/loki-logger/issues"
+    "url": "https://github.com/sgodoy17/loki-logger-node/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sgodoy17/loki-logger.git"
+    "url": "git+https://github.com/sgodoy17/loki-logger-node.git"
   },
   "license": "MIT",
   "author": "Simon Godoy",
