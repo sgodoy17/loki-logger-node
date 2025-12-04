@@ -38,12 +38,6 @@ export class LokiService {
     this.entry('fatal', context, message, optionalParams);
   }
 
-  public setConfig(config: LokiSetting): LokiService {
-    this.config = config;
-
-    return this;
-  }
-
   public async execute(): Promise<void> {
     const payload = { streams: Object.values(this.streams) };
 
