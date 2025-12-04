@@ -3,92 +3,47 @@ import { LokiSetting, LokiStream } from '../types';
 
 export class LokiService {
   private streams: Record<string, LokiStream> = {};
+  private config: LokiSetting;
 
-  constructor(public config: LokiSetting) {}
+  constructor(config?: LokiSetting) {
+    this.config = config ?? {
+      name: 'test',
+      stage: 'local',
+      url: 'http://loki:3100',
+      pattern: 'test',
+    };
+  }
 
-  /**
-   * Logs an informational message.
-   *
-   * @param {string} context - Context or module name associated with the log.
-   * @param {string} message - Log message content.
-   * @param {...unknown[]} optionalParams - Additional parameters for contextual logging.
-   */
   public info(context: string, message: string, ...optionalParams: unknown[]): void {
     this.entry('info', context, message, optionalParams);
   }
 
-  /**
-   * Logs an error message.
-   *
-   * @param {string} context - Context or module name associated with the log.
-   * @param {string} message - Error message content.
-   * @param {...unknown[]} optionalParams - Additional error context parameters.
-   */
   public error(context: string, message: string, ...optionalParams: unknown[]): void {
     this.entry('error', context, message, optionalParams);
   }
 
-  /**
-   * Logs a warning message.
-   *
-   * @param {string} context - Context or module name associated with the log.
-   * @param {string} message - Warning message content.
-   * @param {...unknown[]} optionalParams - Additional warning context parameters.
-   */
   public warn(context: string, message: string, ...optionalParams: unknown[]): void {
     this.entry('warn', context, message, optionalParams);
   }
 
-  /**
-   * Logs a debug message.
-   *
-   * @param {string} context - Context or module name associated with the log.
-   * @param {string} message - Debug message content.
-   * @param {...unknown[]} optionalParams - Additional debug context parameters.
-   */
   public debug(context: string, message: string, ...optionalParams: unknown[]): void {
     this.entry('debug', context, message, optionalParams);
   }
 
-  /**
-   * Logs a trace message.
-   *
-   * @param {string} context - Context or module name associated with the log.
-   * @param {string} message - Trace message content.
-   * @param {...unknown[]} optionalParams - Additional trace context parameters.
-   */
   public trace(context: string, message: string, ...optionalParams: unknown[]): void {
     this.entry('trace', context, message, optionalParams);
   }
 
-  /**
-   * Logs a fatal message (indicating critical failure).
-   *
-   * @param {string} context - Context or module name associated with the log.
-   * @param {string} message - Fatal error message content.
-   * @param {...unknown[]} optionalParams - Additional fatal error context parameters.
-   */
   public fatal(context: string, message: string, ...optionalParams: unknown[]): void {
     this.entry('fatal', context, message, optionalParams);
   }
 
-  /**
-   * Updates the Loki service configuration.
-   *
-   * @param {LokiSetting} config - New Loki configuration.
-   * @returns {LokiService} The current LokiService instance for chaining.
-   */
   public setConfig(config: LokiSetting): LokiService {
     this.config = config;
 
     return this;
   }
 
-  /**
-   * Sends all buffered logs to the Loki endpoint. After sending, it clears the in-memory log buffer.
-   *
-   * @throws {Error} Throws if the Loki endpoint returns a non-OK response.
-   */
   public async execute(): Promise<void> {
     const payload = { streams: Object.values(this.streams) };
 

@@ -11,9 +11,9 @@ describe('AppHandler test suite', () => {
 
   it('should call logger.info once with correct arguments', async () => {
     const logger: Logger = loki({
-      name: 'test',
+      name: 'test-service',
       stage: 'local',
-      url: 'http://loki:3100',
+      url: 'http://loki:3200',
       pattern: 'test',
     });
 
