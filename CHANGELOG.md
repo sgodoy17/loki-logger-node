@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.0.2](https://github.com/sgodoy17/loki-logger-node/releases/tag/v1.0.2) (2026-05-14)
+
+### Fixed
+
+- Added `import` condition to `exports` field in `package.json` to fix resolution when bundling with esbuild.
+
 ## [v1.0.1](https://github.com/sgodoy17/loki-logger-node/releases/tag/v1.0.1) (2026-05-14)
 
 ### Changed
