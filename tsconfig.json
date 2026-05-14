@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "allowJs": false,
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2022",
+    "sourceMap": true,
+    "outDir": "dist",
+    "baseUrl": ".",
+    "rootDirs": ["./src", "./test"],
+    "incremental": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": false,
+    "noUnusedLocals": false,
+    "strictPropertyInitialization": false,
+    "noLib": false,
+    "useUnknownInCatchVariables": false,
+    "types": ["node", "jest"]
+  }
+}
