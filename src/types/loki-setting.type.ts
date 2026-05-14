@@ -4,4 +4,5 @@ export type LokiSetting = {
   stage?: string;
   pattern?: string;
   job?: string;
+  headers?: Record<string, string>;
 };
