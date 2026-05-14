@@ -1,91 +1,78 @@
-import eslint from '@eslint/js';
-import eslintTs from 'typescript-eslint';
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
-import eslintConfigPrettier from 'eslint-config-prettier';
+import js from '@eslint/js';
+import prettierRecommended from 'eslint-plugin-prettier/recommended';
 import globals from 'globals';
-import tsParser from '@typescript-eslint/parser';
-import importPlugin from 'eslint-plugin-import';
-import eslintSimpleImportSort from 'eslint-plugin-simple-import-sort';
+import tseslint from 'typescript-eslint';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import unusedImports from 'eslint-plugin-unused-imports';
 
 export default [
-  { ignores: ['node_modules', '**/node_modules/**', '**/*.js', '**/*.d.ts', '**/*.mjs'] },
-  eslint.configs.recommended,
-  importPlugin.flatConfigs.recommended,
-  importPlugin.flatConfigs.typescript,
-  ...eslintTs.configs.recommendedTypeChecked,
-  eslintConfigPrettier,
-  eslintPluginPrettierRecommended,
   {
+    ignores: ['dist', 'node_modules', '**/node_modules/**', '**/*.js', '**/*.d.ts', '**/*.mjs'],
+  },
+  js.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
+  prettierRecommended,
+  {
+    files: ['**/*.ts'],
     plugins: {
-      'simple-import-sort': eslintSimpleImportSort,
-      'import/parsers': tsParser,
+      'simple-import-sort': simpleImportSort,
+      'unused-imports': unusedImports,
     },
     languageOptions: {
       globals: {
         ...globals.node,
-        ...globals.jest,
       },
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-      parser: tsParser,
+      sourceType: 'commonjs',
       parserOptions: {
         projectService: true,
         tsconfigRootDir: import.meta.dirname,
       },
     },
-    settings: {
-      'import/parsers': {
-        '@typescript-eslint/parser': ['.ts'],
-      },
-      'import/resolver': {
-        typescript: {
-          alwaysTryTypes: true,
-        },
+  },
+  {
+    files: ['**/*.spec.ts', '**/*.test.ts'],
+    languageOptions: {
+      globals: {
+        ...globals.jest,
       },
     },
+  },
+  {
     rules: {
-      '@typescript-eslint/no-explicit-any': 'off',
-      // '@typescript-eslint/unbound-method': 'off',
-      'max-len': [
-        'error',
-        {
-          code: 120,
-          ignoreTemplateLiterals: true,
-          ignoreRegExpLiterals: true,
-          ignoreStrings: true,
-          ignoreUrls: true,
-        },
-      ],
-      'no-console': ['error'],
-      complexity: ['error', { max: 10 }],
-      'spaced-comment': [2, 'always'],
       'simple-import-sort/imports': [
         'error',
         {
           groups: [
-            ['^node:.*', '^(assert|async_hooks|buffer|child_process|cluster|console|crypto|dns|dgram|events|fs|http|https|net|os|path|perf_hooks|process|querystring|readline|stream|string_decoder|timers|tls|tty|url|util|v8|vm|worker_threads|zlib)(/.*|$)'],
+            ['^node:', '^fs$', '^path$'],
             ['^@?\\w'],
+            ['^@app/bootstrap'],
             ['^@app/config'],
             ['^@app/'],
             ['^@app/shared'],
-            ['^(/|\\.)[^/]+/'],
             ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
             ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
             ['^.*\\u0000$'],
           ],
         },
       ],
+      'no-console': ['warn'],
+      complexity: ['warn', { max: 15 }],
       'simple-import-sort/exports': 'error',
-      'import/first': 'error',
-      'import/newline-after-import': 'error',
-      'import/no-duplicates': 'error',
-      'import/no-unresolved': 'off',
-      '@typescript-eslint/no-unsafe-assignment': 'off',
-      // '@typescript-eslint/no-unsafe-call': 'off',
-      // '@typescript-eslint/no-unsafe-member-access': 'off',
-      // '@typescript-eslint/no-unsafe-return': 'off',
-      // '@typescript-eslint/no-unsafe-argument': 'off',
-      // '@typescript-eslint/require-await': 'off',
+      'unused-imports/no-unused-imports': 'error',
+      'unused-imports/no-unused-vars': [
+        'warn',
+        {
+          vars: 'all',
+          varsIgnorePattern: '^_',
+          args: 'after-used',
+          argsIgnorePattern: '^_',
+        },
+      ],
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-floating-promises': 'error',
+      '@typescript-eslint/no-unsafe-argument': 'error',
+      '@typescript-eslint/no-unsafe-call': 'error',
+      'prettier/prettier': ['error', { endOfLine: 'auto' }],
     },
   },
 ];

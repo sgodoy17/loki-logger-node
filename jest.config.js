@@ -11,8 +11,8 @@ module.exports = {
   collectCoverageFrom: ['**/*.(t|j)s'],
   coverageDirectory: './coverage',
   testEnvironment: 'node',
-  roots: ['<rootDir>/src/', '<rootDir>/tests/'],
-  setupFiles: ['<rootDir>/tests/mocks/env.mock.ts'],
+  roots: ['<rootDir>/src/', '<rootDir>/test/'],
+  setupFiles: ['<rootDir>/test/mocks/env.mock.ts'],
   moduleNameMapper: compilerOptions.paths
     ? pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>' })
     : {},

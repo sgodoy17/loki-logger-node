@@ -12,7 +12,7 @@
     "sourceMap": true,
     "outDir": "dist",
     "baseUrl": ".",
-    "rootDirs": ["./src", "./tests"],
+    "rootDirs": ["./src", "./test"],
     "incremental": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
@@ -24,6 +24,7 @@
     "noUnusedLocals": false,
     "strictPropertyInitialization": false,
     "noLib": false,
-    "useUnknownInCatchVariables": false
+    "useUnknownInCatchVariables": false,
+    "types": ["node", "jest"]
   }
 }

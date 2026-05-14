@@ -1,4 +1,6 @@
-import { DateTimeHelper, ErrorHelper, LokiHelper } from '../helpers';
+import { request } from 'node:http';
+
+import { DateTimeHelper, LokiHelper } from '../helpers';
 import { LokiSetting, LokiStream } from '../types';
 
 export class LokiService {
@@ -39,21 +41,47 @@ export class LokiService {
   }
 
   public async execute(): Promise<void> {
-    const payload = { streams: Object.values(this.streams) };
+    const payload = JSON.stringify({ streams: Object.values(this.streams) });
 
     this.streams = {};
 
     try {
-      const response = await fetch(new URL('loki/api/v1/push', this.config.url), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-        signal: AbortSignal.timeout(3000),
-      });
+      const { hostname, port, pathname } = new URL('loki/api/v1/push', this.config.url);
+      const length = Buffer.byteLength(payload);
+      const timeout = length / 1024 / 1024 > 0.5 ? 3_000 : 1_000;
 
-      if (!response.ok) {
-        ErrorHelper.quickError(await response.text());
-      }
+      await new Promise<void>((resolve, reject) => {
+        const client = request({
+          hostname,
+          port,
+          path: pathname,
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Content-Length': length },
+          timeout,
+          signal: AbortSignal.timeout(timeout),
+        });
+
+        client.on('response', response => {
+          if (response.statusCode && response.statusCode >= 400) {
+            reject(new Error(`Loki rejected logs: ${response.statusCode}`));
+          } else {
+            resolve();
+          }
+        });
+
+        client.on('timeout', () => {
+          client.destroy();
+
+          reject(new Error('Loki request timed out'));
+        });
+
+        client.on('error', error => {
+          reject(error);
+        });
+
+        client.write(payload);
+        client.end();
+      });
     } catch (error: unknown) {
       const message = `Got an error when trying to send log to Loki, error output: ${JSON.stringify(error)}`;
 
