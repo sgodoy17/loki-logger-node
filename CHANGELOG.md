@@ -1,10 +1,15 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See \[standard-version\](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file.
 
+## [v1.0.0](https://github.com/sgodoy17/loki-logger-node/releases/tag/v1.0.0) (2026-05-14)
 
-## [0.0.1]() (2024-04-03)
+### Breaking Changes
 
-### Changes
+- Replaced `fetch` with `node:http` for socket-level timeout handling, preventing Lambda hangs when Loki is unreachable.
 
-* **feat:** release digital identity 11c0322
+## [v0.0.1](https://github.com/sgodoy17/loki-logger-node/releases/tag/v0.0.1) (2026-05-14)
+
+### Added
+
+- Initial release of Loki Node.js logger integration.
