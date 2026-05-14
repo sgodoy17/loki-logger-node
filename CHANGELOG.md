@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.0.1](https://github.com/sgodoy17/loki-logger-node/releases/tag/v1.0.1) (2026-05-14)
+
+### Changed
+
+- Updated CI pipeline to trigger on tag push instead of branch push for correct Trusted Publishing OIDC authentication with npm.
+
 ## [v1.0.0](https://github.com/sgodoy17/loki-logger-node/releases/tag/v1.0.0) (2026-05-14)
 
 ### Breaking Changes
