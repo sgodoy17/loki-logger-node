@@ -1,6 +1,6 @@
 {
   "name": "loki-logger-node",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Lightweight Node.js logger for Grafana Loki — simple, fast, and easy to integrate.",
   "keywords": [
     "loki",
