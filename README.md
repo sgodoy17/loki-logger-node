@@ -13,7 +13,7 @@ Lightweight Node.js logger for Grafana Loki — simple, fast, and easy to integr
 ```typescript
 import { loki } from 'loki-logger-node';
 
-const logger = loki({ name: 'my-service', stage: 'production', url: '[http://loki:3100](http://loki:3100)', pattern: 'default', });
+const logger = loki({ name: 'my-service', stage: 'production', url: '[http://loki:3100](http://loki:3100)', pattern: 'default' });
 
 logger.info('Bootstrap', 'Application started');
 
@@ -27,7 +27,7 @@ await logger.flush();
 Creates or returns a logger instance.
 
 ```typescript
-const logger = loki({ name: 'my-service', stage: 'production', url: '[http://loki:3100](http://loki:3100)', });
+const logger = loki({ name: 'my-service', stage: 'production', url: '[http://loki:3100](http://loki:3100)' });
 ```
 
 ## Configuration
@@ -50,7 +50,7 @@ type LokiSetting = { url: string | URL; name: string; stage?: string; pattern?: 
 ```typescript
 import { loki } from 'loki-logger-node';
 
-const logger = loki({ name: 'my-service', stage: 'production', url: '[https://loki.example.com](https://loki.example.com)', });
+const logger = loki({ name: 'my-service', stage: 'production', url: '[https://loki.example.com](https://loki.example.com)' });
 
 logger.info('Bootstrap', 'Application started');
 
@@ -62,7 +62,7 @@ await logger.flush();
 ```typescript
 import { loki } from 'loki-logger-node';
 
-const logger = loki({ name: 'my-service', stage: 'production', url: '[https://loki.example.com](https://loki.example.com)', headers: { Authorization: `Bearer ${process.env.LOKI_TOKEN}`, 'X-Scope-OrgID': 'my-tenant', }, });
+const logger = loki({ name: 'my-service', stage: 'production', url: '[https://loki.example.com](https://loki.example.com)', headers: { Authorization: `Bearer ${process.env.LOKI_TOKEN}`, 'X-Scope-OrgID': 'my-tenant' } });
 
 logger.info('Bootstrap', 'Application started');
 
