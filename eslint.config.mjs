@@ -6,36 +6,22 @@ import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unusedImports from 'eslint-plugin-unused-imports';
 
 export default [
-  {
-    ignores: ['dist', 'node_modules', '**/node_modules/**', '**/*.js', '**/*.d.ts', '**/*.mjs'],
-  },
+  { ignores: ['dist', 'node_modules', '**/node_modules/**', '**/*.js', '**/*.d.ts', '**/*.mjs'] },
   js.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   prettierRecommended,
   {
     files: ['**/*.ts'],
-    plugins: {
-      'simple-import-sort': simpleImportSort,
-      'unused-imports': unusedImports,
-    },
+    plugins: { 'simple-import-sort': simpleImportSort, 'unused-imports': unusedImports },
     languageOptions: {
-      globals: {
-        ...globals.node,
-      },
+      globals: { ...globals.node },
       sourceType: 'commonjs',
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: import.meta.dirname,
-      },
+      parserOptions: { projectService: true, tsconfigRootDir: import.meta.dirname },
     },
   },
   {
     files: ['**/*.spec.ts', '**/*.test.ts'],
-    languageOptions: {
-      globals: {
-        ...globals.jest,
-      },
-    },
+    languageOptions: { globals: { ...globals.jest } },
   },
   {
     rules: {

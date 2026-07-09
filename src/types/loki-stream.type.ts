@@ -1,4 +1,1 @@
-export type LokiStream = {
-  stream: Record<string, unknown>;
-  values: [string, string][];
-};
+export type LokiStream = { stream: Record<string, unknown>; values: [string, string][] };
