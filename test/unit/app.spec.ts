@@ -192,7 +192,7 @@ describe('AppHandler test suite', () => {
           Authorization: 'Bearer test-token',
           'X-Scope-OrgID': 'test-tenant',
           'Content-Type': 'application/json',
-        }),
+        }) as unknown,
       }),
     );
   });
@@ -209,7 +209,9 @@ describe('AppHandler test suite', () => {
 
     await logger.flush();
 
-    const requestBody = client.write.mock.calls[0][0] as string;
+    const stream = client.write.mock.calls[0] as string[];
+    const requestBody = stream[0];
+
     const payload = JSON.parse(requestBody) as {
       streams: Array<{
         stream: Record<string, unknown>;
@@ -240,6 +242,39 @@ describe('AppHandler test suite', () => {
 
     expect(https.request).toHaveBeenCalledTimes(1);
     expect(http.request).not.toHaveBeenCalled();
+  });
+
+  it('should mask the string message with sensible data', async () => {
+    const logger: Logger = loki({
+      name: 'test',
+      stage: 'local',
+      url: 'http://loki:3100',
+      pattern: 'test',
+      mask: {
+        enabled: true,
+        fields: { pcs: { prefix: 2, suffix: 2 }, email: { type: 'email' } },
+      },
+    });
+
+    const spy = jest.spyOn(logger, 'info');
+
+    logger.info('test', 'the pcs: 56972498549 and email: jhon.doeh@gmail.com, should be masked.', {
+      pcs: '56972498549',
+      email: 'jhon.doeh@gmail.com',
+    });
+
+    await logger.flush();
+
+    expect(http.request).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(
+      'test',
+      'the pcs: 56972498549 and email: jhon.doeh@gmail.com, should be masked.',
+      {
+        pcs: '56972498549',
+        email: 'jhon.doeh@gmail.com',
+      },
+    );
   });
 
   afterEach(() => {

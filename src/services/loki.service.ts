@@ -3,9 +3,11 @@ import { request as https } from 'node:https';
 
 import { GeneralException } from '../exceptions';
 import { DateTimeHelper, ErrorHelper, LokiHelper } from '../helpers';
+import { MaskProcessor } from '../processors';
 import { Level, LokiSetting, LokiStream } from '../types';
 
 export class LokiService {
+  private readonly maskProcessor: MaskProcessor;
   private streams: Record<string, LokiStream> = {};
   private config: LokiSetting;
 
@@ -16,6 +18,8 @@ export class LokiService {
       url: 'http://loki:3100',
       pattern: 'test',
     };
+
+    this.maskProcessor = new MaskProcessor(this.config.mask);
   }
 
   public info(context: string, message: string, ...optionalParams: unknown[]): void {
@@ -103,7 +107,14 @@ export class LokiService {
   }
 
   private entry(level: Level, context: string, message: string, params?: unknown[]): void {
-    const content = JSON.stringify(LokiHelper.format(level, context, message, params));
+    const content = JSON.stringify(
+      LokiHelper.format(
+        level,
+        context,
+        this.maskProcessor.mask(message),
+        this.maskProcessor.mask(params),
+      ),
+    );
 
     process.stdout.write(`${content}\n`);
 
