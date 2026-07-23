@@ -47,7 +47,7 @@ export class MaskProcessor {
     let result = message;
 
     for (const [field, config] of Object.entries(this.options?.fields ?? {})) {
-      const regex = new RegExp(`(${field}\\s*[:=-]\\s*)([^,\\s]+)`, 'gi');
+      const regex = new RegExp(`(${field}\\s*[:=-]\\s*)([^,\\s"'}\\]]+)`, 'gi');
 
       result = result.replace(regex, (_, prefix: number, value: string) => {
         return prefix + this.maskValue(value, config);

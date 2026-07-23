@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.1.2](https://github.com/sgodoy17/loki-logger-node/releases/tag/v1.1.2) (2026-07-23)
+
+### Fixed
+
+- Improved string masking so configured fields do not absorb trailing JSON punctuation when masking JSON.stringify() output.
+
 ## [v1.1.1](https://github.com/sgodoy17/loki-logger-node/releases/tag/v1.1.1) (2026-07-23)
 
 ### Fixed
