@@ -202,7 +202,9 @@ Supported formats include:
 ```text
 pcs: 56972498549
 pcs = 56972498549
+pcs - 56972498549
 
 email: john.doe@gmail.com
 email = john.doe@gmail.com
+email - john.doe@gmail.com
 ```

@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.1.1](https://github.com/sgodoy17/loki-logger-node/releases/tag/v1.1.1) (2026-07-23)
+
+### Fixed
+
+- Fixed issue where `mask` options were not being applied to structured log objects starting with `-` characters.
+
 ## [v1.1.0](https://github.com/sgodoy17/loki-logger-node/releases/tag/v1.1.0) (2026-07-09)
 
 ### Added
